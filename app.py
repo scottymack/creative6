@@ -21,12 +21,12 @@ foursquare = OAuth2Service(
                            access_token_url='https://foursquare.com/oauth2/access_token',
                            base_url='https://api.foursquare.com/v2/')
 
-redirect_uri = 'https://authentication201.herokuapp.com/callback'
+redirect_uri = 'https://cs462-3.herokuapp.com/callback'
 
 params = {'response_type': 'token',
     'redirect_uri': redirect_uri}
 
-authorize_url = 'https://foursquare.com/oauth2/authenticate?client_id=2OCO5OCLZKWNOEPIHWYHTMWL2MQHTMHSKYKDDQNJLC4JMUZM&response_type=code&redirect_uri=https://authentication201.herokuapp.com/callback'
+authorize_url = 'https://foursquare.com/oauth2/authenticate?client_id=2OCO5OCLZKWNOEPIHWYHTMWL2MQHTMHSKYKDDQNJLC4JMUZM&response_type=code&redirect_uri=https://cs462-3.herokuapp.com/callback'
 
 config = {
   "apiKey": "AIzaSyAcdYepozWMh7M-AP--clyPmech8iZNsS8",
@@ -61,14 +61,14 @@ def demo():
 @app.route("/signUp", methods=['GET', 'POST'])
 def signup():
     print("got into signUp, should redirect now...")
-    return redirect('https://foursquare.com/oauth2/authenticate?client_id=2OCO5OCLZKWNOEPIHWYHTMWL2MQHTMHSKYKDDQNJLC4JMUZM&response_type=code&redirect_uri=https://authentication201.herokuapp.com/callback')
+    return redirect('https://foursquare.com/oauth2/authenticate?client_id=2OCO5OCLZKWNOEPIHWYHTMWL2MQHTMHSKYKDDQNJLC4JMUZM&response_type=code&redirect_uri=https://cs462-3.herokuapp.com/callback')
 
 
 @app.route("/callback", methods=["GET"])
 def callback():
     code = request.args.get('code')
     print('Code: ' + code);
-    response = requests.get('https://foursquare.com/oauth2/access_token?client_id=2OCO5OCLZKWNOEPIHWYHTMWL2MQHTMHSKYKDDQNJLC4JMUZM&client_secret=LSQJ44VLGONVTIY11ND52SGEP25IATFYROODVQ1WE4OLAJGH&grant_type=authorization_code&redirect_uri=https://authentication201.herokuapp.com/callback&code='+code).json()
+    response = requests.get('https://foursquare.com/oauth2/access_token?client_id=2OCO5OCLZKWNOEPIHWYHTMWL2MQHTMHSKYKDDQNJLC4JMUZM&client_secret=LSQJ44VLGONVTIY11ND52SGEP25IATFYROODVQ1WE4OLAJGH&grant_type=authorization_code&redirect_uri=https://cs462-3.herokuapp.com/callback&code='+code).json()
     print(response)
     access_token = response['access_token']
     print('Access Token: ' + access_token);
