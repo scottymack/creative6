@@ -1,0 +1,14 @@
+beautifulsoup4==4.5.1
+click==6.7
+Flask==0.12
+itsdangerous==0.24
+Jinja2==2.9.5
+MarkupSafe==0.23
+oauthlib==2.0.1
+rauth==0.7.3
+requests==2.11.1
+requests-oauthlib==0.7.0
+Werkzeug==0.11.15
+gunicorn==19.6.0
+python-firebase==1.2
+Pyrebase==3.0.27

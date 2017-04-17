@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Foursquare API App</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/app.css">
+    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<!--     <script src="../static/js/app.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAcdYepozWMh7M-AP--clyPmech8iZNsS8",
+    authDomain: "cs462-3.firebaseapp.com",
+    databaseURL: "https://cs462-3.firebaseio.com",
+    storageBucket: "cs462-3.appspot.com",
+    messagingSenderId: "249275284605"
+  };
+  firebase.initializeApp(config);
+ 
+ var users = firebase.database().ref('/users');
+ console.log(firebase.database());
+ console.log(users);
+ console.log("Initialized Database");
+ var userRef = firebase.database().ref('/users');
+   userRef.on('value', function(snapshot) {
+     console.log(snapshot.val());
+   });
+
+ users.on('value', function(snapshot) {
+    var data = snapshot.val();
+    console.log(data);
+    var list = [];
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            name = data[key].name ? data[key].name : '';
+            console.log(name);
+            if (name.trim().length > 0) 
+            {
+                list.push({
+                    name: name,
+                    key: key
+                })
+            }
+        }
+    }
+});
+
+function saveToList(event) 
+{
+    if (event.which == 13 || event.keyCode == 13) { // as the user presses the enter key, we will attempt to save the data
+    var movieName = document.getElementById('movieName').value.trim();
+    if (movieName.length > 0) {
+    var li = '<li>' + movieName + '</li>';
+    document.getElementById('favMovies').innerHTML += li;
+    }
+    document.getElementById('movieName').value = '';
+    return false;
+    }
+}
+
+function refreshUI(list) {
+    var lis = '';
+    for (var i = 0; i < list.length; i++) {
+        lis += '<li data-key="' + list[i].key + '">' + list[i].name + '</li>';
+    };
+    document.getElementById('favMovies').innerHTML = lis;
+};
+ 
+// this will get fired on inital load as well as when ever there is a change in the data
+users.on('value', function(snapshot) {
+    var data = snapshot.val();
+    print(data);
+    var list = [];
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            name = data[key].name ? data[key].name : '';
+            if (name.trim().length > 0) {
+                list.push({
+                    name: name,
+                    key: key
+                })
+            }
+        }
+    }
+    // refresh the UI
+    refreshUI(list);
+});
+ 
+ </script>
+ 
+ <script>
+ $.ajax({
+  type: 'GET',
+  url: 'https://cs462-3.herokuapp.com/users',
+  dataType: "json",
+  success: function (data) {
+    console.log("got in the ajax request");
+    console.log(data);
+      var items = data ;
+      $.each(items, function(index, item)
+            {
+            everything += "<li><a href='"+item.link+"'>"+item.title+"</a>" ;
+            });
+            everything += "</ul>" ;
+            $("#searchResults").html(everything) ;
+            }
+  }
+});
+ </script>
+
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                    <li role="presentation"><a href="showSignUp">Sign In</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Foursquare API App</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h2>Foursquare API App</h2>
+            <p class="lead"></p>
+            <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign In!</a>
+            </p>
+     </div>
+
+             <div>
+                 <h1>Current Users</h1>
+                 <hr />
+                 <ol id="users">
+                 </ol>
+              
+              <dl>
+                {% for key, value in users.iteritems() %}
+                <li><a href={{value['url']}}>{{value['name']}} - {{value['email']}}</a></li>
+                {% endfor %}
+             </dl>
+              
+             </div>
+ 
+        <footer class="footer">
+            <p>&copy; Scott McKenzie 2017</p>
+        </footer>
+     
+    </div>
+</body>
+ 
+</html>

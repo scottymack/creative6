@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Foursquare API App</title>
+ 
+ 
+    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                    <li role="presentation"><a href="/logout">Logout</a>
+                    </li>
+                    <li role="presentation"><a href={{ profile }}>Profile</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Foursquare API App</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h2>Foursquare API App</h2>
+            <p class="lead"></p>
+            <p><a class="btn btn-lg btn-success" href="/logout" role="button">Logout :(</a>
+            </p>
+        </div>
+ 
+                  <div>
+                 <h1>Current Users</h1>
+                 <hr />
+                 <ol id="users">
+                 </ol>
+              
+              <dl>
+                {% for key, value in users.iteritems() %}
+                <li><a href={{value['url']}}>{{value['name']}} - {{value['email']}}</a></li>
+                {% endfor %}
+             </dl>
+              
+             </div>
+     
+        <footer class="footer">
+            <p>&copy; Scott McKenzie 2017</p>
+        </footer>
+ 
+    </div>
+</body>
+ 
+</html>
